@@ -3,11 +3,14 @@ import React, { useState } from 'react'
 import Image from 'next/image';
 import { Button } from '@/components/ui/button';
 import axios from 'axios';
+import { useRouter } from 'next/navigation';
+import { toast } from 'sonner';
 
 
 function CourseInfo({ course }) {
   const courseLayout = course?.courseJson?.course;
   const [loading, setLoading] = useState(false);
+  const router = useRouter();
 
   const GenerateCourseContent=async ()=>{
     //Call API to Generate Content
@@ -20,10 +23,13 @@ function CourseInfo({ course }) {
     });
     console.log(result.data);
     setLoading(false);
+    router.replace('/workspace')
+    toast.success('Course Generated Successfully')
   }
   catch(e){
     console.log(e);
     setLoading(false);
+    toast.error("Server Side error, Try Again!")
 
   }
   }
