@@ -37,6 +37,7 @@ export const ai = new GoogleGenAI({
 export async function POST(req){
   const {courseId, ...formData} = await req.json();
   const user = await currentUser();
+  const hasPremiumAccess = has({ plan: 'starter' })
 
   const ai = new GoogleGenAI({
     apiKey: process.env.GEMINI_API_KEY,
@@ -172,6 +173,18 @@ I'm now putting the finishing touches on the JSON object.  I've finalized the co
   //  const RawJson = RawResp.replace('```json','').replace('```','');
   //  const JSONResp = JSON.parse(RawJson);
 
+
+// If user already created any course?
+  if(!hasPremiumAccess)
+  {
+    const result = await  db.select().from(coursesTable).where(eq(coursesTable.userEmail,user?.primaryEmailAddress.emailAddress));
+
+    if(result?.length>=1)
+    {
+      return NextResponse.json({'resp':'limit exceed'})
+    }
+  }
+
   const response = await ai.models.generateContent({
   model,
   config,
@@ -227,4 +240,7 @@ const result = await axios.post(BASE_URL+'/api/generate-image',
 console.log(result.data.image) //Output Result: Base 64 Image
 return result.data.image;
 }
+
+
+
 

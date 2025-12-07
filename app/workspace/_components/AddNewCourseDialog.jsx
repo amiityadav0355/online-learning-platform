@@ -62,6 +62,12 @@ function AddNewCourseDialog({ children }) {
       courseId
     });
     console.log(result.data);
+    if(result.data.resp=='limit exceed')
+    {
+      toast.warning('Please subscribe to plan!')
+      router.push('/workspace/billing')
+    }
+
     router.push('/workspace/edit-course/'+result.data?.courseId);//redirect to banner page after success
 
     setLoading(false)

@@ -28,18 +28,14 @@ const SideBarOptions= [
   {
     title:'My Learning',
     icon: Book,
-    path:'/workspace/my-course'
+    path:'/workspace/my-learning'
   },
   {
     title:'Explore Courses',
     icon: Compass,
     path:'/workspace/explore'
   },
-  {
-    title:'AI Tools',
-    icon: PencilRuler,
-    path:'/workspace/ai-tools'
-  },
+ 
   {
     title:'Billing',
     icon: WalletCards,

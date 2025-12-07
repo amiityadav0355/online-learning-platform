@@ -1,5 +1,4 @@
-import { boolean } from "drizzle-orm/gel-core";
-import { integer, pgTable, varchar, json } from "drizzle-orm/pg-core";
+import { integer, pgTable, varchar, json, boolean } from "drizzle-orm/pg-core";
 
 export const usersTable = pgTable("users", {
   id: integer().primaryKey().generatedAlwaysAsIdentity(),
@@ -20,7 +19,7 @@ export const usersTable = pgTable("users", {
   category:varchar(),
   courseJson:json(),
   bannerImageUrl:varchar().default(''),
-  courseContent:json().default({}),
+  courseContent:json("courseContent").default({}),
   userEmail:varchar('userEmail').references(()=>usersTable.email).notNull()
  })
  export const enrollCourseTable=pgTable('enrollCourse',{
@@ -29,3 +28,5 @@ export const usersTable = pgTable("users", {
   userEmail:varchar('userEmail').references(()=>usersTable.email).notNull(),
   completedChapters:json()
  })
+
+
